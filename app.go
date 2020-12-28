@@ -13,6 +13,7 @@ type MyID struct {
 
 // New create myid instance
 func New(workerid uint8, seed uint64) interface{} {
+	log.Printf("init info:%d,%d", workerid, seed)
 	shortid, err := shortid.New(workerid, shortid.DefaultABC, seed)
 	if err != nil {
 		log.Println("some wrong", err)
