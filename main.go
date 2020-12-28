@@ -1,15 +1,34 @@
 package main
 
-import "plugin"
+import (
+	"log"
+	"plugin"
+)
 
-func main() {
+// MyGenerateID myGenerateID
+type MyGenerateID interface {
+	GenerateID() string
+}
+
+var myGenerateID MyGenerateID
+
+func init() {
 	p, err := plugin.Open("./demoapp.so")
 	if err != nil {
 		panic(err)
 	}
-	s, err := p.Lookup("PrintInfo")
+	// init plugin for shortid
+	s, err := p.Lookup("New")
 	if err != nil {
-		panic(err)
+		panic("init plugin error")
 	}
-	s.(func())()
+	myid := s.(func(workerid uint8, seed uint64) interface{})(2, 2000)
+	myGenerateID = myid.(MyGenerateID)
+}
+
+func main() {
+	for i := 0; i < 10; i++ {
+		log.Println("generate id:", myGenerateID.GenerateID())
+
+	}
 }
