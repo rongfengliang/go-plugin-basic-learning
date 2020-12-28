@@ -31,3 +31,5 @@ func (myid MyID) GenerateID() string {
 	}
 	return id
 }
+
+func main() {}

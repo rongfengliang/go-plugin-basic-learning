@@ -13,7 +13,7 @@ type MyGenerateID interface {
 var myGenerateID MyGenerateID
 
 func init() {
-	p, err := plugin.Open("./demoapp.so")
+	p, err := plugin.Open("./id.so")
 	if err != nil {
 		panic(err)
 	}
